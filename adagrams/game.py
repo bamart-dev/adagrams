@@ -52,10 +52,26 @@ def uses_available_letters(word, letter_bank):
 
     return True  # f(x) returns True if checks above pass.
 
-
-
 def score_word(word):
-    pass
+    # dictionary of letters and their point values:
+    letter_values = {
+        'A': 1, 'B': 3, 'C': 3, 'D': 2, 'E': 1, 'F': 4, 'G': 2, 'H': 4, 'I': 1,
+        'J': 8, 'K': 5, 'L': 1, 'M': 3, 'N': 1, 'O': 1, 'P': 3, 'Q': 10, 'R':1,
+        'S': 1, 'T': 1, 'U': 1, 'V': 4, 'W': 4, 'X': 8, 'Y': 4, 'Z': 10
+    }
+    MIN_BONUS_LENGTH = 7  # minimum word length for length point bonus
+    WORD_LENGTH_BONUS = 8  # amount of points awarded for length bonus
+    score = 0
+
+    for letter in word:
+        formatted_letter = letter.upper()  # formats letter to uppercase
+
+        score += letter_values[formatted_letter]  # adds points to 'score'
+    # adds length bonus if word meets requirement:
+    if len(word) >= MIN_BONUS_LENGTH:
+        score += WORD_LENGTH_BONUS
+
+    return score
 
 def get_highest_word_score(word_list):
     pass
