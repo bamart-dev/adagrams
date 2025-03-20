@@ -28,7 +28,31 @@ def draw_letters():
     return hand
 
 def uses_available_letters(word, letter_bank):
-    pass
+    formatted_word = word.upper() # formats 'word' to all uppercase letters.
+    # builds 'letter_bank_count' to keep track of letters in the bank:
+    letter_bank_count = {}
+    for letter in letter_bank:
+        if letter not in letter_bank_count:
+            letter_bank_count[letter] = 1  # adds new key:value if not present
+        else:
+            letter_bank_count[letter] += 1  # adds to value if key is present
+    # builds 'word_letter_count' to keep track of letters in word:
+    word_letter_count = {}
+    for letter in formatted_word:
+        if letter not in word_letter_count:
+            word_letter_count[letter] = 1
+        else:
+            word_letter_count[letter] += 1
+        # checks if letter is present in letter bank OR if a letter has been
+        # used more than the number of times it appears in the bank; returns
+        # False if either condition is true:
+        if (letter not in letter_bank
+            or word_letter_count[letter] > letter_bank_count[letter]):
+            return False
+
+    return True  # f(x) returns True if checks above pass.
+
+
 
 def score_word(word):
     pass
