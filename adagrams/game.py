@@ -7,6 +7,7 @@ def draw_letters():
     'J': 1, 'K': 1, 'L': 4, 'M': 2, 'N': 6, 'O': 8, 'P': 2, 'Q': 1, 'R': 6,
     'S': 4, 'T': 6, 'U': 4, 'V': 2, 'W': 2, 'X': 1, 'Y': 2, 'Z': 1
     }
+    MAX_WORD_LENGTH = 10  # Maximum word length permitted.
     letter_pool = []  # will hold expanded letter pool list.
     # iterates through dictionary, adding the appropriate number of letters to
     # 'letter_pool' based on frequency:
@@ -15,7 +16,7 @@ def draw_letters():
     hand = []  # will hold the player's drawn hand.
 
     past_indices = []  # keeps track of what indices have been prev. selected.
-    while len(hand) < 10:  # loops until 'hand' is full.
+    while len(hand) < MAX_WORD_LENGTH:  # loops until 'hand' is full.
         random_index = randint(0, len(letter_pool) - 1)  # selects random value
         # checks if current random_index has previously been selected:
         if random_index in past_indices:
@@ -80,6 +81,9 @@ def get_highest_word_score(word_list):
         'J': 8, 'K': 5, 'L': 1, 'M': 3, 'N': 1, 'O': 1, 'P': 3, 'Q': 10, 'R':1,
         'S': 1, 'T': 1, 'U': 1, 'V': 4, 'W': 4, 'X': 8, 'Y': 4, 'Z': 10
     }
+    MIN_BONUS_LENGTH = 7  # minimum word length for point bonus
+    WORD_LENGTH_BONUS = 8  # amount of points awarded for length bonus.
+    MAX_WORD_LENGTH = 10  # maximum word length permitted.
     winning_word = ""  # tracks the winning word
     highest_score = 0  # tacks the highest score
 
@@ -89,8 +93,8 @@ def get_highest_word_score(word_list):
         for letter in word:
             current_score += letter_values[letter]
         # adds the length bonus for 7 letter words or longer:
-        if len(word) > 7:
-            current_score += 8
+        if len(word) > MIN_BONUS_LENGTH:
+            current_score += WORD_LENGTH_BONUS
         # this outer if/elif block checks current score against the highest;
         # if greater, assigns word to winning_word & currecnt_score to
         # highest_score...
@@ -102,12 +106,14 @@ def get_highest_word_score(word_list):
         elif current_score == highest_score:
             # if word is of length 10 AND the current winning_word isn't
             # already 10 letters long:
-            if len(word) == 10 and len(winning_word) != 10:
+            if (len(word) == MAX_WORD_LENGTH
+                and len(winning_word) != MAX_WORD_LENGTH):
                 winning_word = word
                 highest_score = current_score
             # if word length is shorter than winning_word AND winning_word
             # isn't 10 letters long:
-            elif len(word) < len(winning_word) and len(winning_word) != 10:
+            elif (len(word) < len(winning_word)
+                  and len(winning_word) != MAX_WORD_LENGTH):
                 winning_word = word
                 highest_score = current_score
 
