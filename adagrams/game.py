@@ -88,6 +88,9 @@ def get_highest_word_score(word_list):
         # this for loop handles calculating the current word's score:
         for letter in word:
             current_score += letter_values[letter]
+        # adds the length bonus for 7 letter words or longer:
+        if len(word) > 7:
+            current_score += 8
         # this outer if/elif block checks current score against the highest;
         # if greater, assigns word to winning_word & currecnt_score to
         # highest_score...
@@ -97,8 +100,9 @@ def get_highest_word_score(word_list):
         # ... but if equal, the inner if/elif block within elif executes
         # depending on lengths:
         elif current_score == highest_score:
-            # if word is of length 10:
-            if len(word) == 10:
+            # if word is of length 10 AND the current winning_word isn't
+            # already 10 letters long:
+            if len(word) == 10 and len(winning_word) != 10:
                 winning_word = word
                 highest_score = current_score
             # if word length is shorter than winning_word AND winning_word
