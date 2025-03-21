@@ -74,4 +74,37 @@ def score_word(word):
     return score
 
 def get_highest_word_score(word_list):
-    pass
+    # dictionary of letters and their point values:
+    letter_values = {
+        'A': 1, 'B': 3, 'C': 3, 'D': 2, 'E': 1, 'F': 4, 'G': 2, 'H': 4, 'I': 1,
+        'J': 8, 'K': 5, 'L': 1, 'M': 3, 'N': 1, 'O': 1, 'P': 3, 'Q': 10, 'R':1,
+        'S': 1, 'T': 1, 'U': 1, 'V': 4, 'W': 4, 'X': 8, 'Y': 4, 'Z': 10
+    }
+    winning_word = ""  # tracks the winning word
+    highest_score = 0  # tacks the highest score
+
+    for word in word_list:
+        current_score = 0  # tracks the current score of a given word
+        # this for loop handles calculating the current word's score:
+        for letter in word:
+            current_score += letter_values[letter]
+        # this outer if/elif block checks current score against the highest;
+        # if greater, assigns word to winning_word & currecnt_score to
+        # highest_score...
+        if current_score > highest_score:
+            winning_word = word
+            highest_score = current_score
+        # ... but if equal, the inner if/elif block within elif executes
+        # depending on lengths:
+        elif current_score == highest_score:
+            # if word is of length 10:
+            if len(word) == 10:
+                winning_word = word
+                highest_score = current_score
+            # if word length is shorter than winning_word AND winning_word
+            # isn't 10 letters long:
+            elif len(word) < len(winning_word) and len(winning_word) != 10:
+                winning_word = word
+                highest_score = current_score
+
+    return winning_word, highest_score
